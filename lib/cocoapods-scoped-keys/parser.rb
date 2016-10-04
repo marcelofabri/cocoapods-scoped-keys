@@ -36,13 +36,24 @@ module ScopedKeys
         end
       end
 
-      keys = config[:keys].product(options).map do |key, conditions|
+      keys_array = config[:keys].product(options).map do |key, conditions|
         suffix = conditions.map { |h| h[:value] }.reverse
         name = ([key] + suffix).join('__')
         [name, conditions]
-      end.to_h
+      end
+      keys = hash_from_array(keys_array)
 
       keys.merge(keys_and_conditions_from_config(config[:config], options))
+    end
+
+    # same as array.to_h, but works on Ruby 2.0.0
+    def hash_from_array(array)
+      hash = {}
+      array.each do |k, v|
+        hash[k] = v
+      end
+
+      hash
     end
 
     def enums_from_config(config)
