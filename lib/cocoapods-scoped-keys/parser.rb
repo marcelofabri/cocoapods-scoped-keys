@@ -82,5 +82,5 @@ module ScopedKeys
     def project(config)
       config.fetch('project') { CocoaPodsKeys::NameWhisperer.get_project_name }
     end
-end
+  end
 end
