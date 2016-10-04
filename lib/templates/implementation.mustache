@@ -1,0 +1,55 @@
+// Generated automatically
+
+#import "{{ class_name }}.h"
+#import <Keys/{{ private_class_name }}.h>
+
+@interface {{ class_name }} ()
+
+{{#enums}}
+@property (nonatomic) {{ class_name }}{{ name }} {{ camelcase_name }};
+{{/enums}}
+
+@property (nonatomic, strong) {{ private_class_name }} *keys;
+
+@end
+
+@implementation {{ class_name }}
+
+{{#init_declaration}}
+- (instancetype){{{ init_declaration }}} {
+    self = [super init];
+    if (self) {
+        {{#enums}}
+        _{{ camelcase_name }} = {{ camelcase_name }};
+        {{/enums}}
+        _keys = [[{{ private_class_name }} alloc] init];
+    }
+
+    return self;
+}
+{{/init_declaration}}
+{{^init_declaration}}
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _keys = [[{{ private_class_name }} alloc] init];
+    }
+
+    return self;
+}
+{{/init_declaration}}
+
+{{#keys_implementations}}
+- (NSString *){{ key }} {
+    {{#conditions}}
+    if ({{{ if_clause }}}) {
+      return [self.keys {{ private_key }}];
+    }
+    {{/conditions}}
+    {{^conditions}}
+    return [self.keys {{ key }}];
+    {{/conditions}}
+}
+
+{{/keys_implementations}}
+@end

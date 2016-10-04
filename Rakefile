@@ -4,10 +4,10 @@ def specs(dir)
   FileList["spec/#{dir}/*_spec.rb"].shuffle.join(' ')
 end
 
-desc 'Runs all the specs'
-task :specs do
-  sh "bundle exec bacon #{specs('**')}"
+desc 'Run tests'
+task :spec do
+  sh "bundle exec rspec #{specs('**')}"
+  sh 'bundle exec rubocop lib spec Rakefile'
 end
 
-task :default => :specs
-
+task default: :spec

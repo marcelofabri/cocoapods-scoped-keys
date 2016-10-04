@@ -1,0 +1,29 @@
+// Generated automatically
+
+#import <Foundation/Foundation.h>
+
+{{#enums}}
+typedef NS_ENUM(NSUInteger, {{ class_name }}{{ name }}) {
+    {{#options}}
+    {{ class_name }}Keys{{ name }}{{ . }},
+    {{/options}}
+};
+
+{{/enums}}
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface {{ class_name }} : NSObject
+
+{{#init_declaration}}
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype){{{ init_declaration }}};
+
+{{/init_declaration}}
+{{#keys}}
+@property (nonatomic, copy, readonly) NSString *{{ . }};
+{{/keys}}
+
+@end
+
+NS_ASSUME_NONNULL_END
